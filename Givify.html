@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GiviFy</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family:"roboto";
+        }
+
+        :root {
+            --primary-color: #a5bdbf;    /* Light Blue */
+            --secondary-color: #2c3e50;  /* Darker Blue */
+            --highlight-color: #1aa2e8;  /* Accent Blue */
+        }
+        body, html {
+            height: 100%;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: var(--secondary-color);
+            padding: 0.5rem;
+            position: sticky;
+            top: 0;
+            height: 70px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between; /* Align items horizontally */
+            align-items: center; /* Vertically center items */
+        }
+
+        .navbar-buttons {
+            display: flex; /* Use flexbox for the buttons */
+            gap: 1rem; /* Space between the buttons */
+        }
+        .search-bar {
+position: relative;
+width: 300px;
+height: 55px;
+background-color: #f2f2f2;
+border: 1px solid #ccc;
+padding: 10px;
+border-radius: 20px;
+display: flex;
+align-items: center;
+margin-left: auto; /* Move search bar to right side */
+}
+
+.search-bar input[type="text"] {
+  width: 85%;
+  height: 100%;
+  padding: 10px;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+}
+
+.search-bar button[type="submit"] {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.search-bar button[type="submit"] i {
+  color: #333;
+}
+       
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        nav ul li {
+            display: inline-block;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: var(--highlight-color);
+        }
+
+        /* Logo holder */
+        .logo-holder {
+            display: flex;
+            justify-content: flex-start;  /* Align the logo to the left */
+            align-items: center;
+            padding: 2rem;
+            background-color: var(--secondary-color);
+        }
+
+        .logo-holder img {
+            max-width: 150px;
+            height: auto;
+        }
+
+        .container {
+            max-width: 100%;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: rgba(248, 246, 248, 0.95);
+            border-bottom: 2px solid var(--secondary-color);
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .points-section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            min-height: 80vh;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            background-color: transparent;
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 4px;
+        }
+
+        input[type="number"], input[type="text"] {
+            width: 200px;
+            padding: 8px;
+            margin: 1rem 0;
+            border: 2px solid var(--secondary-color);
+            border-radius: 6px;
+            font-size: 1.1rem;
+        }
+
+        button {
+            background-color: (--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            background-color: var(--highlight-color);
+        }
+
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .reward-item {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .reward-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .points/info {
+            margin-top: 2rem;
+            font-size: 1.2rem;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .slider {
+            width: 50%;
+            max-width: 600px;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+            border-radius: 10px;
+            margin: auto;
+        }
+
+        .slides {
+            display: flex;
+            width: 300%;
+            animation: slideAnimation 9s infinite linear;
+            transition: transform 10s;
+        }
+        @keyframes slideAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-200%);
+  }
+}
+
+
+
+        .slider {
+            margin-left: 0;
+  margin-right: auto;
+
+        }
+
+        .slide img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+        }
+
+        @keyframes slideAnimation {
+            0% { transform: translateX(0); }
+            33% { transform: translateX(-100%); }
+            66% { transform: translateX(-200%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Navigation Dots */
+        .navigation {
+            text-align: center;
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .dot:hover {
+            background: gray;
+        }
+        /*css*/
+        /* Sliders Container Styles */
+
+.sliders-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 20px;
+}
+
+.slider {
+  width: calc(33.33% - 5px);
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+  margin: 0;
+}
+
+.slides {
+  display: flex;
+  width: 300%;
+  animation: slideAnimation 9s infinite linear;
+  transition: transform ;
+}
+
+@keyframes slideAnimation {
+  15% {
+    transform: translateX(20);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.slide img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.navigation {
+  text-align: center;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.dot:hover {
+  background: gray;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Logo Holder -->
+    <header style="background-color: #a5bdbf;">
+        <img src="logo3.jpg" alt="GiviFy Logo" style="width: 100px; height: 83px; border-radius: 50%; border: 5px solid #333;">
+        <h1>GiviFy</h1>
+    </header>
+
+    <!-- Navigation Menu -->
+    <nav class="navbar">
+        
+        <div class="navbar-buttons">
+            <div class="dropdown">
+                <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" style="background-color: #b0bcc8; color: black; border: none; padding: 10px 20px; border-radius: 5px;">Login<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="login.html" target="main">Login</a></li>
+                    <li><a class="dropdown-item" href="index (9).html" target="main">Create Id</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" style="background-color: #b0bcc8; color: black; border: none; padding: 10px 20px; border-radius: 5px;">User<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                   <li><a class="dropdown-item" href="index (3).html " target="main">Organisation</a></li>
+                    <li><a class="dropdown-item" href="volunteer list.html" target="main">Volunteer</a></li>
+                    <li><a class="dropdown-item" href="index (8).html" target="main">Volunteering Hours</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" style="background-color: #b0bcc8; color: black; border: none; padding: 10px 20px; border-radius: 5px;">Redeem<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="index (5).html" target="main">GY Coins</a></li>
+                    <li><a class="dropdown-item" href="index (7).html" target="main">Shop</a></li>
+                    <li><a class="dropdown-item" href="#"></a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" style="background-color: #b0bcc8; color: black; border: none; padding: 10px 20px; border-radius: 5px;">Setting<span class="caret"></span></button>
+                <ul class="dropdown-menu">        <li><a class="dropdown-item" href="profile.html" target="main">Account Center</a></li>
+                    <li><a class="dropdown-item" href="#">Language</a></li>
+                    <li><a class="dropdown-item" href="#">Personal information</a></li>
+                    <li><a class="dropdown-item" href="#">History</a></li>
+                    <li><a class="dropdown-item" href="#">Terms of Service</a></li>
+                    <li><a class="dropdown-item" href="#">Privacy policie</a></li>
+                    <li><a class="dropdown-item" href="#">Community standards</a></li>
+                </ul>
+            </div>
+            
+            
+
+            <div class="dropdown">
+                <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" style="background-color: #b0bcc8; color: black; border: none; padding: 10px 20px; border-radius: 5px;">Locality<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="https://www.google.co.in/maps/place/Paonta+Sahib,+Himachal+Pradesh+173025/@30.4429915,77.5890431,14z/data=!3m1!4b1!4m6!3m5!1s0x390f23004c62217f:0x3742d7187796a33c!8m2!3d30.445283!4d77.6020569!16zL20vMGJqd2Rr?entry=ttu&g_ep=EgoyMDI1MDIwNS4wIKXMDSoJLDEwMjExMjMzSAFQAw%3D%3D">View Map</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" style="background-color: #b0bcc8; color: black; border: none; padding: 10px 20px; border-radius: 5px;">Subscription<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="https://docs.google.com/forms/d/e/1FAIpQLSdKynNIrHjgDcMSg8sbTdwqG_F8K1RrqeWiJqZ0dNmCiKVl8w/viewform">Rs-50 mo.</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" style="background-color: #b0bcc8; color: black; border: none; padding: 10px 20px; border-radius: 5px;">Notification<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="index (11).html" target="main">Alert</a></li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" style="background-color: #b0bcc8; color: black; border: none; padding: 10px 20px; border-radius: 5px;">Calender<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="index (10).html" target="main">Schedule</a></li>
+                    
+                </ul>
+            </div>
+                <!-- Search Bar -->
+                <div class="navbar-buttons">
+                    <!-- ... -->
+                    </div>
+                    <!-- Search Bar -->
+                    <div class="search-bar" style="margin-left: auto;">
+                    <input type="text" id="search-input" placeholder="Search...">
+                    <button id="search-button">🔎</button>
+                    </div>
+                    
+        </div>
+           
+            <!-- ... -->
+        </div>
+    </nav>
+    
+            <div class="main-content">
+                <!-- Sliders Container -->
+<div class="sliders-container">
+    <!-- Slider 1 -->
+    <div class="slider">
+      <div class="slides">
+        <div class="slide" style="width: 100%;"><img src="pic1.jpg" alt="Slide 1"></div>
+        <div class="slide"style="width: 100%;"><img src="pic2.jpg" alt="Slide 2"></div>
+        <div class="slide"style="width: 100%;"><img src="pic3.jpg" alt="Slide 3"></div>
+        <div class="slide"style="width: 100%;"><img src="pic4.jpg" alt="Slide 3"></div>
+        <div class="slide"style="width: 100%;"><img src="pic5.jpg" alt="Slide 3"></div>
+      </div>
+      <div class="navigation">
+        <span class=""></span>
+        <span class=""></span>
+        <span class=""></span>
+        <h3><u style="color: #ffff">Top companies</u></h3>
+      </div>
+    </div>
+    <!-- Slider 2 -->
+    <div class="slider">
+      <div class="slides">
+        <div class="slide" style="width: 100%;"><img src="winner1.jpg" alt="Slide 1"></div>
+        <div class="slide"style="width: 100%;"><img src="winner2.jpg" alt="Slide 2"></div>
+        <div class="slide"style="width: 100%;"><img src="winner3.jpg" alt="Slide 3"></div>
+        <div class="slide"style="width: 100%;"><img src="winner4.jpg" alt="Slide 3"></div>
+      </div>
+      <div class="navigation">
+        <span class=""></span>
+        <span class=""></span>
+        <span class=""></span>
+        <h3><u style="color: #ffff">Privious Year Top 10 winners</u></h3>
+      </div>
+    </div>
+    <!-- Slider 3 -->
+    <div class="slider">
+      <div class="slides">
+        <div class="slide" style="width: 100%;"><img src="charity1.jpg" alt="Slide 1"></div>
+        <div class="slide"style="width: 100%;"><img src="charity2.jpg" alt="Slide 2"></div>
+        <div class="slide"style="width: 100%;"><img src="charity3.jpg" alt="Slide 3"></div>
+        <div class="slide"style="width: 100%;"><img src="charity4.jpg" alt="Slide 3"></div>
+      </div>
+      <div class="navigation">
+        <span class=""></span>
+        <span class=""></span>
+        <span class=""></span>
+        <h3><u style="color: #ffff">Public Services</u></h3>
+      </div>
+    </div>
+  </div>
+ <!-- Chat Box Container -->
+<div class="chat-box-container" id="chat-box-container">
+    <!-- Chat Box Header -->
+    <div class="dropdown">
+        <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" style="background-color: #2c3e50; color: #ffff; border: none; padding: 10px 20px; border-radius: 5px;">Chat Now<span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="index (6).html" target="main">Support Team</a></li>
+        </ul>
+    </div>
+    </div>
+    <div >
+        <button type="button" class="btn btn-dark dropdown-toggle" style="background-color: #2c3e50; color: #b0bcc8; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 6px;">Rate US<span class="caret"></span></button>
+        
+    </div>
+    
+  </div>
+  
+  
+  
+        <!-- Points Earn Section -->
+        <div class="points-section">
+            <h2>About</h2>
+            <p>
+                Welcome to GiviFy
+
+At GiviFy, we believe in the power of community and the impact of collective action. Our mission is to connect passionate volunteers with meaningful opportunities that make a difference in their communities. Whether you’re looking to lend a helping hand, share your skills, or simply give back, our platform is designed to make volunteering accessible, engaging, and rewarding for everyone.
+            </p>
+            <h2>Join Now</h2>
+            <p>
+                Whether you’re a seasoned volunteer or new to the experience, we invite you to join our growing community. Sign up today to discover opportunities that align with your passions and skills. Together, we can make a difference, one act of kindness at a time.
+
+Thank you for being a part of GiviFy. Let’s create a brighter future together!
+            </p>
+            <h2>Contact Us</h2>
+            <p>
+                Have questions or feedback? We’d love to hear from you! Reach out to us at givify****@gmail.org or follow us on [social media links].
+
+Together, let’s make volunteering a rewarding journey for everyone
+            </p>
+
+            </div>
+        </div>
+
+       
+
+        <!-- Rewards Grid -->
+        <div class="rewards-grid" id="rewardsGrid"></div>
+    </div>
+
+    <script>
+        // Global variable to store the current points
+        let currentPoints = 0;
+        const rewardTypeInput = document.getElementById('rewardType');
+        const addedPointsInput = document.getElementById('addedPoints');
+        const currentPointsDisplay = document.getElementById('currentPoints');
+        const rewardsGrid = document.getElementById('rewardsGrid');
+
+        function earnPoints() {
+            const points = parseInt(addedPointsInput.value) || 0;
+            if (points > 0) {
+                addPoints(points);
+                updateCurrentPoints();
+                resetPoints();
+            }
+        }
+        const searchButton = document.getElementById('search-button');
+const searchInput = document.getElementById('search-input');
+
+searchButton.addEventListener('click', () => {
+  const searchTerm = searchInput.value.trim();
+  if (searchTerm) {
+    // Implement search functionality here
+    console.log(`Searching for: ${searchTerm}`);
+  } else {
+    alert('Please enter a search term.');
+ }
+});
+
+
+        function addPoints(points) {
+            console.log(`Added ${points} points!`);
+        }
+
+        function updateCurrentPoints() {
+            currentPoints += parseInt(addedPointsInput.value);
+            currentPointsDisplay.textContent = currentPoints;
+        }
+
+        function resetPoints() {
+            addedPointsInput.value = '';
+        }
+
+        function viewPoints() {
+            console.log(`Points earned: ${currentPoints}`);
+            currentPointsDisplay.textContent = currentPoints;
+        }
+
+        function redeemPoints() {
+            const rewardType = rewardTypeInput.value.trim();
+            if (rewardType) {
+                alert('You are about to redeem points for ' + rewardType + '. Please select rewards below:');
+                
+                // Clear previous rewards in the grid
+                rewardsGrid.innerHTML = '';
+
+                if (rewardType === 'Health & Wellness') {
+                    addReward('Diet Plan', 50);
+                    addReward('Fitness Training', 100);
+                    addReward('Weight Loss Program', 75);
+                } else if (rewardType === 'Skill Development') {
+                    addReward('Coding Course', 300);
+                    addReward('Public Speaking', 200);
+                    addReward('Leadership Training', 150);
+                } else {
+                    alert('No rewards available for this category.');
+                }
+            } else {
+                alert('Please enter a reward type.');
+            }
+        }
+
+        function addReward(rewardName, points) {
+            const rewardDiv = document.createElement('div');
+            rewardDiv.className = 'reward-item';
+            rewardDiv.innerHTML = `
+                <h3>${rewardName}</h3>
+                <p>${points} points</p>
+            `;
+            rewardsGrid.appendChild(rewardDiv);
+        }
+    </script>
+</body>
+</html>

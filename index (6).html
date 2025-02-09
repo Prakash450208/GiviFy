@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .bg-sky-blue {
+            background-color: #87CEEB;
+        }
+        .hover-bg-sky-blue:hover {
+            background-color: #00BFFF;
+        }
+        .text-sky-blue {
+            color: #87CEEB;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen" style="background-color: #b0bcc8;">
+    <div class="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="flex flex-col h-full">
+            <div class="bg-sky-blue text-white p-4">
+                <h2 class="text-2xl font-bold">Chat Room</h2>
+            </div>
+            <div class="flex-1 p-4 overflow-y-auto" id="chatBox">
+                <div class="mb-4">
+                    <div class="flex items-start">
+                        <img alt="User avatar" class="w-10 h-10 rounded-full mr-3" height="40" src="https://storage.googleapis.com/a1aa/image/Lt9TQRtpoYCKKFr6BjVt2C-QJ1TyJgtLZpSlobnPmaw.jpg" width="40"/>
+                        <div>
+                            <div class="bg-gray-200 p-3 rounded-lg">
+                                <p class="text-gray-700">Hello! How can I help you today?</p>
+                            </div>
+                            <span class="text-sm text-gray-500">10:00 AM</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4 text-right">
+                    <div class="flex items-start justify-end">
+                        <div>
+                            <div class="bg-sky-blue text-white p-3 rounded-lg">
+                                <p>Hi! I have a question about my account.</p>
+                            </div>
+                            <span class="text-sm text-gray-500">10:02 AM</span>
+                        </div>
+                        <img alt="User avatar" class="w-10 h-10 rounded-full ml-3" height="40" src="https://storage.googleapis.com/a1aa/image/Lt9TQRtpoYCKKFr6BjVt2C-QJ1TyJgtLZpSlobnPmaw.jpg" width="40"/>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="flex items-start">
+                        <img alt="User avatar" class="w-10 h-10 rounded-full mr-3" height="40" src="https://storage.googleapis.com/a1aa/image/Lt9TQRtpoYCKKFr6BjVt2C-QJ1TyJgtLZpSlobnPmaw.jpg" width="40"/>
+                        <div>
+                            <div class="bg-gray-200 p-3 rounded-lg">
+                                <p class="text-gray-700">Sure, what seems to be the issue?</p>
+                            </div>
+                            <span class="text-sm text-gray-500">10:03 AM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-200 p-4">
+                <form class="flex" id="chatForm">
+                    <input class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-blue" id="chatInput" placeholder="Type your message..." type="text"/>
+                    <button class="ml-4 bg-sky-blue text-white px-4 py-2 rounded-lg hover-bg-sky-blue focus:outline-none" type="submit">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        const chatForm = document.getElementById('chatForm');
+        const chatInput = document.getElementById('chatInput');
+        const chatBox = document.getElementById('chatBox');
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const message = chatInput.value.trim();
+            if (message) {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('mb-4', 'text-right');
+                messageElement.innerHTML = `
+                    <div class="flex items-start justify-end">
+                        <div>
+                            <div class="bg-sky-blue text-white p-3 rounded-lg">
+                                <p>${message}</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Just now</span>
+                        </div>
+                        <img alt="User avatar" class="w-10 h-10 rounded-full ml-3" src="https://placehold.co/40x40" />
+                    </div>
+                `;
+                chatBox.appendChild(messageElement);
+                chatBox.scrollTop = chatBox.scrollHeight;
+                chatInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
